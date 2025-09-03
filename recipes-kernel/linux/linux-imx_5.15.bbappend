@@ -5,7 +5,7 @@
 # change the NXP repo with the System Electronics custom one
 KERNEL_SRC = "git://github.com/System-Electronics/linux-imx-lf-5.15.71;protocol=https;branch=${SRCBRANCH}"
 SRCBRANCH = "main"
-SRCREV = "e14895d491268056cae8f67cca74a385f8369870"
+SRCREV = "58eccbbf32184cd57398a614e4351a8f4c73de9d"
 
 # set local version
 LOCALVERSION = "-sysele"
