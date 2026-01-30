@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/System-Electronics/meta-sysele-nxp-5.15.71/blob/main/se_logo.png"/>
+  <img src="https://github.com/System-Electronics/meta-sysele-nxp-6.6.52/blob/main/se_logo.png"/>
 </p>
 
 ----
@@ -72,19 +72,19 @@ mkdir yocto-astrial && cd yocto-astrial
 
 ## Initialize repo manifest
 
-The setup is strictly alilgned to the version NXP imx-5.15.71-2.2.0
+The setup is strictly alilgned to the version NXP imx-6-6-52-2.2.0
 
 * NXP repositories
 
 ```bash
-repo init -u https://github.com/nxp-imx/imx-manifest -b imx-linux-kirkstone -m imx-5.15.71-2.2.0.xml
+repo init -u https://github.com/nxp-imx/imx-manifest -b imx-linux-scarthgap -m imx-6.6.52-2.2.0.xml
 ```
 
 * System Electronics and Hailo repositories
 
 ```
 mkdir -p .repo/local_manifests
-wget --directory-prefix .repo/local_manifests https://raw.githubusercontent.com/System-Electronics/meta-sysele-nxp-5.15.71/main/manifest/astrial-5.15.71.xml
+wget --directory-prefix .repo/local_manifests https://raw.githubusercontent.com/System-Electronics/meta-sysele-nxp-6.6.52/main/manifest/astrial-6.6.52.xml
 ```
 
 * Sync Them all
@@ -125,7 +125,7 @@ NATIVELSBSTRING      = "ubuntu-22.04"
 TARGET_SYS           = "aarch64-poky-linux"
 MACHINE              = "astrial-8gb-imx8mp"
 DISTRO               = "fsl-imx-xwayland"
-DISTRO_VERSION       = "5.15-kirkstone"
+DISTRO_VERSION       = "6.6-scarthgap"
 TUNE_FEATURES        = "aarch64 armv8a crc crypto"
 TARGET_FPU           = ""
 ```
@@ -412,7 +412,7 @@ Connected Known USB Devices
 ```
 
 ## Enable DSI
-DSI port is disabled by default. For more infomation about how to enable the display port, please see the guide [here](https://github.com/System-Electronics/meta-sysele-nxp-5.15.71/blob/main/ASTRIAL-ENABLE-DSI.md).
+DSI port is disabled by default. For more infomation about how to enable the display port, please see the guide [here](https://github.com/System-Electronics/meta-sysele-nxp-6.6.52/blob/main/ASTRIAL-ENABLE-DSI.md).
 
 ## Rootfs resize
 From release version 1.1.2 and above, `rootfs-resize` recipe has been introduced to expand root partition to the maximum size. To prevent possible kernel errors, be sure to run the following commands after the first boot:
@@ -422,4 +422,4 @@ reboot
 ```
 
 ## Enable cryptochip
-If you are interested to use cryptochip SE050, please see the following [guide](https://github.com/System-Electronics/meta-sysele-nxp-5.15.71/blob/main/ASTRIAL-SE05x.md).
+If you are interested to use cryptochip SE050, please see the following [guide](https://github.com/System-Electronics/meta-sysele-nxp-6.6.52/blob/main/ASTRIAL-SE05x.md).
