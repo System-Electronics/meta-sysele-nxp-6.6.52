@@ -3,14 +3,13 @@
 #
 
 # change the NXP repo with the System Electronics custom one
-KERNEL_SRC = "git://github.com/System-Electronics/linux-imx-lf-5.15.71;protocol=https;branch=${SRCBRANCH}"
+LINUX_IMX_SRC = "git://${TOPDIR}/../linux-imx-lf-6.6.52;branch=${SRCBRANCH}"
 SRCBRANCH = "main"
-SRCREV = "58eccbbf32184cd57398a614e4351a8f4c73de9d"
+SRCREV = "6450eeb46f6e2f06c6f3f1753de345ae8f0f335b"
 
 # set local version
 LOCALVERSION = "-sysele"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-SRC_URI += "file://0001-backport-pca9450-driver-from-upstream-83808c5.patch"
 SRC_URI += "file://caam.cfg"
