@@ -8,15 +8,21 @@
 
 ## Build Information
 As first step, you need to enable the `se05x` recipe:
-1. Go to `your/path/sources-extra/meta-sysele-nxp-5.15.71/recipes-images/images`
+1. Go to `your/path/sources-extra/meta-sysele-nxp-6.6.52/recipes-images/images`
 2. Open `system-astrial-image.bb` with a text editor
 3. Uncomment the following line:
 ```bash
 #IMAGE_INSTALL:append = " keyctl-caam se05x"
 ```
+4. Go to `your/path/sources-extra/meta-sysele-nxp-6.6.52/conf`
+4. Open `layer.conf` with a text editor
+5. Uncomment the following line:
+```bash
+#ENABLE_SE05 = "1"
+```
 If you try to build the full image or the single recipe ```se05x``` for the first time, the following messages will be shown and the build will be interrupted:
 ```bash
-WARNING: your/path/sources-extra/meta-sysele-nxp-5.15.71/recipes-security/se05x/se05x_04.05.01.bb: Unable to get checksum for se05x SRC_URI entry SE-PLUG-TRUST-MW_04.07.00.zip: file could not be found
+WARNING: your/path/sources-extra/meta-sysele-nxp-6.6.52/recipes-security/se05x/se05x_04.05.01.bb: Unable to get checksum for se05x SRC_URI entry SE-PLUG-TRUST-MW_04.07.00.zip: file could not be found
 ```
 ```bash
 ERROR: se05x-04.05.01-r0 do_check_smw_uri: file://SE-PLUG-TRUST-MW_04.07.00.zip is missing. This is a proprietary NXP package that you can download from here:
@@ -24,7 +30,7 @@ ERROR: se05x-04.05.01-r0 do_check_smw_uri: file://SE-PLUG-TRUST-MW_04.07.00.zip 
 ```
 To solve the problem:
 1. Download the missing file from here https://www.nxp.com/webapp/Download?colCode=SE05x-PLUG-TRUST-MW&appType=license
-2. Save the zip file in ```your/path/sources-extra/meta-sysele-nxp-5.15.71/recipes-security/se05x/files```
+2. Save the zip file in ```your/path/sources-extra/meta-sysele-nxp-6.6.52/recipes-security/se05x/files```
 3. Restart the build process
 
 ## How to use ssscli Command
