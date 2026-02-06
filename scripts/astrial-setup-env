@@ -3,7 +3,7 @@
 MACHINE=${MACHINE:-astrial-8gb-imx8mp}
 DISTRO=${DISTRO:-fsl-imx-xwayland}
 EULA=1
-T="../sources-extra/meta-sysele-nxp-5.15.71/templates"
+T="../sources-extra/meta-sysele-nxp-6.6.52/templates"
 
 BD=$(cat <<< $@ | awk '$0=$NF')
 

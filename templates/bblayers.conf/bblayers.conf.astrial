@@ -1,3 +1,5 @@
+# Chromium-ozone-wayland layer
+BBLAYERS += "${BSPDIR}/sources/meta-broswer/meta-chromium"
 
 # Intel Realsense Layer
 BBLAYERS += "${BSPDIR}/sources-extra/meta-intel-realsense"
@@ -14,4 +16,4 @@ BBLAYERS += "${BSPDIR}/sources-extra/meta-imx8mp-isp-imx219"
 BBLAYERS += "${BSPDIR}/sources-extra/meta-nxp-security-reference-design/meta-secure-boot"
 
 # System Electronics layer
-BBLAYERS += "${BSPDIR}/sources-extra/meta-sysele-nxp-5.15.71"
+BBLAYERS += "${BSPDIR}/sources-extra/meta-sysele-nxp-6.6.52"
