@@ -161,7 +161,7 @@ index d544b4c..436af19 100755
  	# Available configurations: dual_Os08a20_1080p60, dual_Os08a20_1080p30hdr
  	exec ./run.sh -c dual_os08a20_1080p60 -lm
  
-+elif [ $NR_DEVICE_TREE_IMX219 -eq 2 ]; then
++elif [ $NR_DEVICE_TREE_IMX219 -eq 1 ]; then
 +
 +	echo "Starting isp_media_server for Single imx219"
 +
