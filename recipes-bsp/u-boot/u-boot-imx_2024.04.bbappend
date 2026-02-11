@@ -3,9 +3,9 @@
 #
 
 # change the NXP repo with the System Electronics custom one
-UBOOT_SRC = "git://${TOPDIR}/../uboot-imx-lf-6.6.52;branch=${SRCBRANCH}"
+UBOOT_SRC = "git://github.com/System-Electronics/uboot-imx-lf-6.6.52;protocol=https;branch=${SRCBRANCH}"
 SRCBRANCH = "main"
-SRCREV = "0eb96aeac7fe58d82c9ba0b48db29595eb6812bc"
+SRCREV = "aca50c09c32806fb6288afe70a864957ccf73164"
 
 # set local version
 LOCALVERSION = "-sysele"

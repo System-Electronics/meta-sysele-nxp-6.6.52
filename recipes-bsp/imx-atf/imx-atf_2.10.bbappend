@@ -3,6 +3,6 @@
 #
 
 # change the NXP repo with the System Electronics custom one
-ATF_SRC = "git://${TOPDIR}/../imx-atf-lf-6.6.52;branch=${SRCBRANCH}"
+ATF_SRC = "git://github.com/System-Electronics/imx-atf-lf-6.6.52;protocol=https;branch=${SRCBRANCH}"
 SRCBRANCH = "main"
-SRCREV = "65f659e5f2e76338918da7369ef0ca262f51a200"
+SRCREV = "85f1057108eddefa30c588b83b8beb044a59720e"
