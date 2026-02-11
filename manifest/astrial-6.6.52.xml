@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
   <manifest>
 
-  <remote fetch="https://github.com/hailocs" name="hailocs"/>
+
   <remote fetch="https://github.com/System-Electronics" name="system"/>
 
   <project name="meta-intel-realsense" remote="system" revision="scarthgap" path="sources-extra/meta-intel-realsense"/>
-  <project name="meta-hailo-imx" remote="hailocs" revision="scarthgap" path="sources-extra/meta-hailo"/>
+  <project name="meta-hailo-imx" remote="system" revision="scarthgap" path="sources-extra/meta-hailo"/>
   <project name="meta-nxp-security-reference-design" remote="system" path="sources-extra/meta-nxp-security-reference-design" revision="scarthgap-6.6.52-2.2.0"/>
   <project name="meta-sysele-nxp-6.6.52" remote="system" revision="main" path="sources-extra/meta-sysele-nxp-6.6.52" >
     <linkfile src="scripts/astrial-setup-env" dest="astrial-setup-env" />

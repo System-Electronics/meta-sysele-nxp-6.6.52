@@ -9,9 +9,6 @@ BBLAYERS += "${BSPDIR}/sources-extra/meta-hailo/meta-hailo-accelerator"
 BBLAYERS += "${BSPDIR}/sources-extra/meta-hailo/meta-hailo-libhailort"
 BBLAYERS += "${BSPDIR}/sources-extra/meta-hailo/meta-hailo-tappas"
 
-# NXP IMX219 layer
-BBLAYERS += "${BSPDIR}/sources-extra/meta-imx8mp-isp-imx219"
-
 # Secure Boot layer
 BBLAYERS += "${BSPDIR}/sources-extra/meta-nxp-security-reference-design/meta-secure-boot"
 
