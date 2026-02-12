@@ -50,6 +50,9 @@ IMAGE_INSTALL:append = " opencv opencv-dev libopencv-core-dev libopencv-highgui-
 ## Tools Extra
 IMAGE_INSTALL:append = " git joe du-dust python3-shtab python3-tldr custom-shell dtc python3-pyqt6 chromium-ozone-wayland"
 
+# Optionally ensure it’s included in the rootfs
+IMAGE_INSTALL:append = " kernel-module-isp-vvcam"
+
 # Rootfs will automatically resize to fill entire space by itself, but leave some extra space for initial operations
 # Use overhead factor instead of extra space since there are some problems with the rootfs size estimation which lead to:
 #   Copying files into the device: __populate_fs: Could not allocate block in ext2 filesystem while writing file "..."

@@ -38,3 +38,6 @@ IMX_DEFAULT_BSP = "nxp"
 ATF_BOOT_UART_BASE = "0x30860000"
 
 WKS_FILE = "astrial-imx8mp-bootpart.wks.in"
+
+# Automatically build isp-vvcam (AF0130) with kernel
+MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "kernel-module-isp-vvcam"

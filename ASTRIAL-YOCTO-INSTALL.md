@@ -84,7 +84,7 @@ repo init -u https://github.com/nxp-imx/imx-manifest -b imx-linux-scarthgap -m i
 
 ```
 mkdir -p .repo/local_manifests
-wget --directory-prefix .repo/local_manifests https://raw.githubusercontent.com/System-Electronics/meta-sysele-nxp-6.6.52/main/manifest/astrial-6.6.52.xml
+wget --directory-prefix .repo/local_manifests https://raw.githubusercontent.com/System-Electronics/meta-sysele-nxp-6.6.52/onsemi-itof/manifest/astrial-6.6.52.xml
 ```
 
 * Sync Them all

@@ -9,6 +9,9 @@ BBLAYERS += "${BSPDIR}/sources-extra/meta-hailo/meta-hailo-accelerator"
 BBLAYERS += "${BSPDIR}/sources-extra/meta-hailo/meta-hailo-libhailort"
 BBLAYERS += "${BSPDIR}/sources-extra/meta-hailo/meta-hailo-tappas"
 
+# ONSEMI-ITOF
+BBLAYERS += "${BSPDIR}/sources-extra/meta-onsemi"
+
 # Secure Boot layer
 BBLAYERS += "${BSPDIR}/sources-extra/meta-nxp-security-reference-design/meta-secure-boot"
 
