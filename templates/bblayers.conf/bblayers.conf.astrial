@@ -1,5 +1,5 @@
 # Chromium-ozone-wayland layer
-BBLAYERS += "${BSPDIR}/sources/meta-broswer/meta-chromium"
+BBLAYERS += "${BSPDIR}/sources/meta-browser/meta-chromium"
 
 # Intel Realsense Layer
 BBLAYERS += "${BSPDIR}/sources-extra/meta-intel-realsense"
