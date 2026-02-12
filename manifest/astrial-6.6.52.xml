@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
   <manifest>
 
-
   <remote fetch="https://github.com/System-Electronics" name="system"/>
+  <remote fetch="git@github.com:gfilippi" name="gfilippi"/>
 
   <project name="meta-intel-realsense" remote="system" revision="scarthgap" path="sources-extra/meta-intel-realsense"/>
   <project name="meta-hailo-imx" remote="system" revision="scarthgap" path="sources-extra/meta-hailo"/>
   <project name="meta-nxp-security-reference-design" remote="system" path="sources-extra/meta-nxp-security-reference-design" revision="scarthgap-6.6.52-2.2.0"/>
-  <project name="meta-sysele-nxp-6.6.52" remote="system" revision="main" path="sources-extra/meta-sysele-nxp-6.6.52" >
+  <project name="meta-sysele-nxp-6.6.52" remote="system" revision="onsemi-itof" path="sources-extra/meta-sysele-nxp-6.6.52" >
     <linkfile src="scripts/astrial-setup-env" dest="astrial-setup-env" />
+  </project>
+  <project name="onsemi-itof" remote="gfilippi" revision="main" path="onsemi-itof">
+      <linkfile src="meta-onsemi" dest="sources-extra/meta-onsemi" />
   </project>
 
   </manifest>
