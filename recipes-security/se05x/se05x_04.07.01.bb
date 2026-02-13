@@ -23,7 +23,7 @@ INSANE_SKIP:${PN} += "dev-so"
 S = "${WORKDIR}/simw-top"
 B = "${WORKDIR}/build"
 
-SMW_URI = "file://${NXP_PLUG_TRUST_MW}.zip"
+SMW_URI = "${@bb.utils.contains('ENABLE_SE05', '1', 'file://${NXP_PLUG_TRUST_MW}.zip', '', d)}"
 SRC_URI = "${SMW_URI} \
            file://0001-fix-openssl-3-compatibility.patch;patchdir=.. \
            file://0002-fix-core-json-as-static-library.patch;patchdir=.. \
