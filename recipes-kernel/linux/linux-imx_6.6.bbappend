@@ -12,4 +12,5 @@ LOCALVERSION = "-sysele"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-SRC_URI += "file://caam.cfg"
+SRC_URI += "file://caam.cfg \
+            file://0001-dts-add-support-for-onsemi-AF0130-camera-on-i2c6.patch"

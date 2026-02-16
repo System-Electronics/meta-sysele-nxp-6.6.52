@@ -11,6 +11,7 @@ KERNEL_DEVICETREE = " \
     system-electronics/${KERNEL_DEVICETREE_BASENAME}-uart3.dtb \
     system-electronics/${KERNEL_DEVICETREE_BASENAME}-dsi-rpi.dtb \
     system-electronics/${KERNEL_DEVICETREE_BASENAME}-dsi-waveshare.dtb \
+    system-electronics/${KERNEL_DEVICETREE_BASENAME}-af0130.dtb \
 "
 KERNEL_DEVICETREE_BASENAME = "imx8mp-astrial"
 
