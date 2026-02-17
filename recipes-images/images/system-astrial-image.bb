@@ -16,7 +16,7 @@ TOOLCHAIN_TARGET_TASK:append = " tensorflow-lite-dev onnxruntime-dev "
 ## Hailo
 IMAGE_INSTALL:append = " libhailort hailortcli pyhailort libgsthailo hailo-pci hailo-firmware"
 IMAGE_INSTALL:append = " libgsthailotools hailo-post-processes"
-IMAGE_INSTALL:append = " tappas-apps tappas-tracers"
+IMAGE_INSTALL:append = " tappas-tracers"
 
 #################################################################################################################
 ## KOAN + Kalpa
