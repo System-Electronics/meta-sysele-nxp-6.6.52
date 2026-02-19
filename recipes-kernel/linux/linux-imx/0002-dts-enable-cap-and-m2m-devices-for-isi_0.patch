@@ -1,0 +1,47 @@
+From 041cc5ae2a7458854cf78c445db3d6f77d3a825e Mon Sep 17 00:00:00 2001
+From: Angelica Denaro <angelica.denaro@kalpa.it>
+Date: Thu, 19 Feb 2026 09:33:43 +0000
+Subject: [PATCH] dts: enable cap and m2m devices for isi_0
+
+---
+ .../imx8mp-astrial-base-af0130.dtsi                | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/system-electronics/imx8mp-astrial-base-af0130.dtsi b/arch/arm64/boot/dts/system-electronics/imx8mp-astrial-base-af0130.dtsi
+index 5195b7ed9..084337c73 100644
+--- a/arch/arm64/boot/dts/system-electronics/imx8mp-astrial-base-af0130.dtsi
++++ b/arch/arm64/boot/dts/system-electronics/imx8mp-astrial-base-af0130.dtsi
+@@ -374,15 +374,15 @@ af0130_0: af0130_mipi@3c {
+ 		compatible = "onsemi,af0130";
+ 		reg = <0x3c>;
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&pinctrl_gpio_flexcan2>, <&pinctrl_csi_mclk>;
++		pinctrl-0 = <&pinctrl_gpio_flexcan2>, <&pinctrl_csi0_rst>;
+ 		clocks = <&clk IMX8MP_CLK_IPP_DO_CLKO2>;
+-		clock-names = "xclk";
++		clock-names = "csi_mclk";
+ 		assigned-clocks = <&clk IMX8MP_CLK_IPP_DO_CLKO2>;
+ 		assigned-clock-parents = <&clk IMX8MP_SYS_PLL2_200M>;
+ 		assigned-clock-rates = <20000000>;
+ 		csi_id = <0>;
+ 		pwn-gpios = <&gpio4 27 GPIO_ACTIVE_HIGH>;
+-		rst-gpios = <&gpio4 26 GPIO_ACTIVE_LOW>;
++		rst-gpios = <&gpio1 5 GPIO_ACTIVE_LOW>;
+ 		mclk = <20000000>;
+ 		mclk_source = <0>;
+ 		mipi_csi;
+@@ -1011,6 +1011,14 @@ &cameradev {
+ 
+ &isi_0 {
+ 	status = "okay";
++
++	cap_device {
++		status = "okay";
++	};
++
++	m2m_device {
++		status = "okay";
++	};
+ };
+ 
+ &isi_1 {
