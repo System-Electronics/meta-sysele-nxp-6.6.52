@@ -1,0 +1,232 @@
+diff --git a/drivers/staging/media/imx/dwc-mipi-csi2.c b/drivers/staging/media/imx/dwc-mipi-csi2.c
+index 8a24b0231596..0e03af0e2ac9 100644
+--- a/drivers/staging/media/imx/dwc-mipi-csi2.c
++++ b/drivers/staging/media/imx/dwc-mipi-csi2.c
+@@ -714,6 +714,7 @@ static void disp_mix_gasket_config(struct dwc_mipi_csi2_host *csi2h)
+ 	case MEDIA_BUS_FMT_SGBRG12_1X12:
+ 	case MEDIA_BUS_FMT_SGRBG12_1X12:
+ 	case MEDIA_BUS_FMT_SRGGB12_1X12:
++	case MEDIA_BUS_FMT_Y12_1X12:
+ 		fmt_val = DT_RAW12;
+ 		break;
+ 	default:
+diff --git a/drivers/staging/media/imx/imx8-isi-cap.c b/drivers/staging/media/imx/imx8-isi-cap.c
+index c3d6bbeed6a2..5f8ae928f604 100644
+--- a/drivers/staging/media/imx/imx8-isi-cap.c
++++ b/drivers/staging/media/imx/imx8-isi-cap.c
+@@ -122,6 +122,7 @@ static int mxc_isi_pipeline_enable(struct mxc_isi_cap_dev *isi_cap, bool enable)
+ 	struct v4l2_subdev *subdev;
+ 	int ret = 0;
+ 
++	printk("enter %s, enable=%d\n", __func__, enable);
+ 	mutex_lock(&mdev->graph_mutex);
+ 
+ 	ret = media_graph_walk_init(&graph, entity->graph_obj.mdev);
+@@ -147,12 +148,15 @@ static int mxc_isi_pipeline_enable(struct mxc_isi_cap_dev *isi_cap, bool enable)
+ 			dev_dbg(dev, "%s subdev is NULL\n", entity->name);
+ 			continue;
+ 		}
+-
+-		ret = v4l2_subdev_call(subdev, video, s_stream, enable);
+-		if (ret < 0 && ret != -ENOIOCTLCMD) {
+-			dev_err(dev, "subdev %s s_stream failed\n", subdev->name);
+-			break;
++#if 1
++		if(!strcmp(subdev->name, "mxc-mipi-csi2.0")) {
++			ret = v4l2_subdev_call(subdev, video, s_stream, enable);
++			if (ret < 0 && ret != -ENOIOCTLCMD) {
++				dev_err(dev, "subdev %s s_stream failed\n", subdev->name);
++				break;
++			}
+ 		}
++#endif
+ 	}
+ 	mutex_unlock(&mdev->graph_mutex);
+ 	media_graph_walk_cleanup(&graph);
+@@ -960,9 +964,12 @@ static int mxc_isi_source_fmt_init(struct mxc_isi_cap_dev *isi_cap)
+ 
+ 	src_fmt.pad = source_pad->index;
+ 	src_fmt.which = V4L2_SUBDEV_FORMAT_ACTIVE;
+-	src_fmt.format.code = MEDIA_BUS_FMT_UYVY8_1X16;
++	//src_fmt.format.code = MEDIA_BUS_FMT_UYVY8_1X16;
++	src_fmt.format.code = dst_f->fmt->mbus_code;
++	printk("%s, set isi src fmt to 0x%x\n", __func__, dst_f->fmt->mbus_code);
+ 	src_fmt.format.width = dst_f->width;
+ 	src_fmt.format.height = dst_f->height;
++	src_fmt.stream = 0;
+ 	ret = v4l2_subdev_call(src_sd, pad, set_fmt, NULL, &src_fmt);
+ 	if (ret < 0 && ret != -ENOIOCTLCMD) {
+ 		v4l2_err(&isi_cap->sd, "set remote fmt fail!\n");
+@@ -978,6 +985,7 @@ static int mxc_isi_source_fmt_init(struct mxc_isi_cap_dev *isi_cap)
+ 		return ret;
+ 	}
+ 
++	printk("%s, get src_fmt=0x%x\n", __func__, src_fmt.format.code);
+ 	/* Pixel link master will transfer format to RGB32 or YUV32 */
+ 	src_f->fmt = mxc_isi_get_src_fmt(&src_fmt);
+ 
+@@ -1024,7 +1032,7 @@ static int mxc_isi_cap_s_fmt_mplane(struct file *file, void *priv,
+ 	dst_f->fmt = fmt;
+ 	dst_f->width = pix->width;
+ 	dst_f->height = pix->height;
+-
++	printk("%s, dst_fmt=0x%x\n", __func__, dst_f->fmt->mbus_code);
+ 	for (i = 0; i < pix->num_planes; i++) {
+ 		dst_f->bytesperline[i] = pix->plane_fmt[i].bytesperline;
+ 		dst_f->sizeimage[i]    = pix->plane_fmt[i].sizeimage;
+diff --git a/drivers/staging/media/imx/imx8-isi-fmt.c b/drivers/staging/media/imx/imx8-isi-fmt.c
+index db11c809a3d3..3058d7e437e6 100644
+--- a/drivers/staging/media/imx/imx8-isi-fmt.c
++++ b/drivers/staging/media/imx/imx8-isi-fmt.c
+@@ -42,7 +42,7 @@ struct mxc_isi_fmt mxc_isi_out_formats[] = {
+ 		.memplanes	= 1,
+ 		.colplanes	= 1,
+ 		.align		= 3,
+-		.mbus_code	= MEDIA_BUS_FMT_YUYV8_1X16,
++		.mbus_code	= MEDIA_BUS_FMT_UYVY8_2X8,
+ 	}, {
+ 		.name		= "YUV32 (X-Y-U-V)",
+ 		.fourcc		= V4L2_PIX_FMT_YUV32,
+@@ -97,6 +97,60 @@ struct mxc_isi_fmt mxc_isi_out_formats[] = {
+ 		.colplanes	= 1,
+ 		.align		= 2,
+ 		.mbus_code	= MEDIA_BUS_FMT_RGB888_1X24,
++	}, {
++		.name		= "RAW12 (SBGGR12)",
++		.fourcc		= V4L2_PIX_FMT_SBGGR12,
++		.depth		= { 16 },
++		.color		= MXC_ISI_OUT_FMT_RAW16,
++		.memplanes	= 1,
++		.colplanes	= 1,
++		.align		= 2,
++		.mbus_code	= MEDIA_BUS_FMT_SBGGR12_1X12,
++	},{
++                .name           = "RAW12 (SGRBG12)",
++                .fourcc         = V4L2_PIX_FMT_SGRBG12,
++                .depth          = { 16 },
++                .color          = MXC_ISI_OUT_FMT_RAW16,
++                .memplanes      = 1,
++                .colplanes      = 1,
++                .align          = 2,
++                .mbus_code      = MEDIA_BUS_FMT_SGRBG12_1X12,
++        },{
++                .name           = "RAW10 (SGRBG10)",
++                .fourcc         = V4L2_PIX_FMT_SGRBG10,
++                .depth          = { 16 },
++                .color          = MXC_ISI_OUT_FMT_RAW16,
++                .memplanes      = 1,
++                .colplanes      = 1,
++                .align          = 2,
++                .mbus_code      = MEDIA_BUS_FMT_SGRBG10_1X10,
++        },{
++                .name           = "RAW10 (Y10)",
++                .fourcc         = V4L2_PIX_FMT_Y10,
++                .depth          = { 16 },
++                .color          = MXC_ISI_OUT_FMT_RAW10,
++                .memplanes      = 1,
++                .colplanes      = 1,
++                .align          = 2,
++                .mbus_code      = MEDIA_BUS_FMT_Y10_1X10,
++        },{
++                .name           = "RAW12 (Y12)",
++                .fourcc         = V4L2_PIX_FMT_Y12,
++                .depth          = { 16 },
++                .color          = MXC_ISI_OUT_FMT_RAW16,
++                .memplanes      = 1,
++                .colplanes      = 1,
++                .align          = 2,
++                .mbus_code      = MEDIA_BUS_FMT_Y12_1X12,
++        },{
++		.name           = "RAW8 (SBGGR8)",
++		.fourcc         = V4L2_PIX_FMT_SBGGR8,
++		.depth          = { 8 },
++		.color          = MXC_ISI_OUT_FMT_RAW8,
++		.memplanes      = 1,
++		.colplanes      = 1,
++		.align          = 2,
++		.mbus_code      = MEDIA_BUS_FMT_SBGGR8_1X8,
+ 	}
+ };
+ 
+diff --git a/drivers/staging/media/imx/imx8-mipi-csi2-sam.c b/drivers/staging/media/imx/imx8-mipi-csi2-sam.c
+index c6af060c4497..5858f5dcae2f 100644
+--- a/drivers/staging/media/imx/imx8-mipi-csi2-sam.c
++++ b/drivers/staging/media/imx/imx8-mipi-csi2-sam.c
+@@ -520,6 +520,11 @@ static const struct csis_pix_format mipi_csis_formats[] = {
+ 		.fmt_reg = MIPI_CSIS_ISPCFG_FMT_RAW12,
+ 		.data_alignment = 16,
+ 	},
++	{
++                .code = MEDIA_BUS_FMT_Y12_1X12,
++                .fmt_reg = MIPI_CSIS_ISPCFG_FMT_RAW12,
++                .data_alignment = 16,
++        },
+ };
+ 
+ #define mipi_csis_write(__csis, __r, __v) writel(__v, __csis->regs + __r)
+@@ -737,6 +742,7 @@ static void __mipi_csis_set_format(struct csi_state *state)
+ 	val &= ~MIPI_CSIS_ISPCFG_FMT_MASK;
+ 	val |= state->csis_fmt->fmt_reg;
+ 	mipi_csis_write(state, MIPI_CSIS_ISPCONFIG_CH0, val);
++	printk("%s, csi fmt: 0x%x\n", __func__, state->csis_fmt->fmt_reg >> 2);
+ 
+ 	val = mipi_csis_read(state, MIPI_CSIS_ISPCONFIG_CH0);
+ 	val &= ~MIPI_CSIS_ISPCONFIG_CH0_PIXEL_MODE_MASK;
+@@ -1003,6 +1009,9 @@ static void disp_mix_gasket_config(struct csi_state *state)
+ 	case MEDIA_BUS_FMT_SRGGB12_1X12:
+ 		fmt_val = GASKET_0_CTRL_DATA_TYPE_RAW12;
+ 		break;
++	case MEDIA_BUS_FMT_Y12_1X12:
++                fmt_val = GASKET_0_CTRL_DATA_TYPE_RAW12;
++                break;
+ 	default:
+ 		pr_err("gasket not support format %d\n", fmt->code);
+ 		return;
+@@ -1115,17 +1124,36 @@ static int mipi_csis_s_power(struct v4l2_subdev *mipi_sd, int on)
+ static int mipi_csis_s_stream(struct v4l2_subdev *mipi_sd, int enable)
+ {
+ 	struct csi_state *state = mipi_sd_to_csi_state(mipi_sd);
++	struct media_pad *source_pad;
++	struct v4l2_subdev *sen_sd;
+ 
++	printk("enter %s, enable=%d\n", __func__, enable);
+ 	v4l2_dbg(1, debug, mipi_sd, "%s: %d, state: 0x%x\n",
+ 		 __func__, enable, state->flags);
+ 
++	/* Get remote source pad */
++	source_pad = csis_get_remote_sensor_pad(state);
++	if (!source_pad) {
++		v4l2_err(&state->sd, "%s, No remote pad found!\n", __func__);
++		return -EINVAL;
++	}
++
++	/* Get remote source pad subdev */
++	sen_sd = csis_get_remote_subdev(state, __func__);
++	if (!sen_sd) {
++		v4l2_err(&state->sd, "%s, No remote subdev found!\n", __func__);
++		return -EINVAL;
++	}
++
+ 	if (enable) {
+ 		pm_runtime_get_sync(state->dev);
+ 		mipi_csis_clear_counters(state);
+ 		mipi_csis_start_stream(state);
+ 		dump_csis_regs(state, __func__);
+ 		dump_gasket_regs(state, __func__);
++		v4l2_subdev_call(sen_sd, video, s_stream, 1);
+ 	} else {
++		v4l2_subdev_call(sen_sd, video, s_stream, 0);
+ 		mipi_csis_stop_stream(state);
+ 		if (debug > 0)
+ 			mipi_csis_log_counters(state, true);
+@@ -1352,6 +1380,9 @@ static int csis_s_fmt(struct v4l2_subdev *sd, struct csi_sam_format *fmt)
+ 	case V4L2_PIX_FMT_SRGGB12:
+ 	    code = MEDIA_BUS_FMT_SRGGB12_1X12;
+ 	    break;
++	case V4L2_PIX_FMT_Y12:
++            code = MEDIA_BUS_FMT_Y12_1X12;
++            break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+ 

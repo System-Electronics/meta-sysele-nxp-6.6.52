@@ -1,12 +1,12 @@
-From ab5d091583f0385e2f4485b7bf7d811398ad0e38 Mon Sep 17 00:00:00 2001
+From 4049d2c6f2c200d7bbe6500099ac272d93b59c62 Mon Sep 17 00:00:00 2001
 From: Angelica Denaro <angelica.denaro@kalpa.it>
-Date: Mon, 16 Feb 2026 13:36:42 +0000
+Date: Tue, 24 Feb 2026 08:04:25 +0000
 Subject: [PATCH] dts: add support for onsemi AF0130 camera on i2c6
 
 ---
  .../imx8mp-astrial-af0130.dts                 |   18 +
- .../imx8mp-astrial-base-af0130.dtsi           | 1104 +++++++++++++++++
- 2 files changed, 1122 insertions(+)
+ .../imx8mp-astrial-base-af0130.dtsi           | 1112 +++++++++++++++++
+ 2 files changed, 1130 insertions(+)
  create mode 100644 arch/arm64/boot/dts/system-electronics/imx8mp-astrial-af0130.dts
  create mode 100644 arch/arm64/boot/dts/system-electronics/imx8mp-astrial-base-af0130.dtsi
 
@@ -36,10 +36,10 @@ index 000000000..f626b85af
 +};
 diff --git a/arch/arm64/boot/dts/system-electronics/imx8mp-astrial-base-af0130.dtsi b/arch/arm64/boot/dts/system-electronics/imx8mp-astrial-base-af0130.dtsi
 new file mode 100644
-index 000000000..5195b7ed9
+index 000000000..084337c73
 --- /dev/null
 +++ b/arch/arm64/boot/dts/system-electronics/imx8mp-astrial-base-af0130.dtsi
-@@ -0,0 +1,1104 @@
+@@ -0,0 +1,1112 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright 2019 NXP
@@ -416,15 +416,15 @@ index 000000000..5195b7ed9
 +		compatible = "onsemi,af0130";
 +		reg = <0x3c>;
 +		pinctrl-names = "default";
-+		pinctrl-0 = <&pinctrl_gpio_flexcan2>, <&pinctrl_csi_mclk>;
++		pinctrl-0 = <&pinctrl_gpio_flexcan2>, <&pinctrl_csi0_rst>;
 +		clocks = <&clk IMX8MP_CLK_IPP_DO_CLKO2>;
-+		clock-names = "xclk";
++		clock-names = "csi_mclk";
 +		assigned-clocks = <&clk IMX8MP_CLK_IPP_DO_CLKO2>;
 +		assigned-clock-parents = <&clk IMX8MP_SYS_PLL2_200M>;
 +		assigned-clock-rates = <20000000>;
 +		csi_id = <0>;
 +		pwn-gpios = <&gpio4 27 GPIO_ACTIVE_HIGH>;
-+		rst-gpios = <&gpio4 26 GPIO_ACTIVE_LOW>;
++		rst-gpios = <&gpio1 5 GPIO_ACTIVE_LOW>;
 +		mclk = <20000000>;
 +		mclk_source = <0>;
 +		mipi_csi;
@@ -1053,6 +1053,14 @@ index 000000000..5195b7ed9
 +
 +&isi_0 {
 +	status = "okay";
++
++	cap_device {
++		status = "okay";
++	};
++
++	m2m_device {
++		status = "okay";
++	};
 +};
 +
 +&isi_1 {

@@ -11,8 +11,5 @@
   <project name="meta-sysele-nxp-6.6.52" remote="system" revision="onsemi-itof" path="sources-extra/meta-sysele-nxp-6.6.52" >
     <linkfile src="scripts/astrial-setup-env" dest="astrial-setup-env" />
   </project>
-  <project name="onsemi-itof" remote="gfilippi" revision="main" path="onsemi-itof">
-      <linkfile src="meta-onsemi" dest="sources-extra/meta-onsemi" />
-  </project>
 
   </manifest>

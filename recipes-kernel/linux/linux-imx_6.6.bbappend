@@ -12,6 +12,16 @@ LOCALVERSION = "-sysele"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
+# Apply only kernel-space patches (like ISI RAW support)
 SRC_URI += "file://caam.cfg \
             file://0001-dts-add-support-for-onsemi-AF0130-camera-on-i2c6.patch \
-            file://0002-dts-enable-cap-and-m2m-devices-for-isi_0.patch"
+            file://imx8-mipi-raw-support-Y12.patch \
+            file://add-af0130-dts-makefile.patch \
+            file://add-af0130-dts-file.patch "
+
+EXTRA_DTBS += " freescale/imx8mp-evk-af0130.dtb"
+
+KERNEL_DEVICETREE:append:use-nxp-bsp = " freescale/imx8mp-evk-af0130.dtb"
+
+# Optional: bump PR so Yocto rebuilds kernel when you change patch
+PR .= ".onsemi1"

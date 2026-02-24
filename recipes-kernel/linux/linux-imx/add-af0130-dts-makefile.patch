@@ -1,0 +1,11 @@
+Index: kernel-source/arch/arm64/boot/dts/freescale/Makefile
+===================================================================
+--- kernel-source.orig/arch/arm64/boot/dts/freescale/Makefile
++++ kernel-source/arch/arm64/boot/dts/freescale/Makefile
+@@ -714,3 +714,6 @@ dtb-$(CONFIG_ARCH_S32) += s32v234-evb.dt
+ 			  s32v234-sbc.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8qm-mek-sof-cs42888.dtb imx8qm-mek-sof-wm8960.dtb \
+ 			  imx8qm-mek-revd-sof-wm8962.dtb imx8qm-mek-sof.dtb
++
++dtb-$(CONFIG_ARCH_MXC) += imx8mp-evk-af0130.dtb
++

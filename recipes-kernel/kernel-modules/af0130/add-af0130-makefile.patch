@@ -1,0 +1,7 @@
+--- a/vvcam/v4l2/sensor/Makefile
++++ b/vvcam/v4l2/sensor/Makefile
+@@ -1,3 +1,4 @@
+ obj-y += ov2775/
+ obj-y += ov5640/
+ obj-y += ar0144/
++obj-y += af0130/
