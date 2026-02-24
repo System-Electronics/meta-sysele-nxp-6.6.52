@@ -1,0 +1,37 @@
+From 2a557f6ec143ef558f0292012c6fe72a9c1a9cfa Mon Sep 17 00:00:00 2001
+From: Angelica Denaro <angelica.denaro@kalpa.it>
+Date: Tue, 24 Feb 2026 13:58:49 +0000
+Subject: [PATCH] add cam1 imx219 configuration
+
+---
+ imx/run.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/imx/run.sh b/imx/run.sh
+index 5c2c857..d02bc4a 100755
+--- a/imx/run.sh
++++ b/imx/run.sh
+@@ -35,6 +35,7 @@ USAGE+="\tdual_os08a20_1080p30hdr - dual os08a20 cameras on MIPI-CSI1/2, 1920x10
+ USAGE+="\tos08a20_4khdr           - single os08a20 camera on MIPI-CSI1, 3840x2160, 15 fps, HDR configuration\n"
+ 
+ USAGE+="\timx219_1080p60         - single imx219 camera on MIPI-CSI1, 1920x1080, 60 fps\n"
++USAGE+="\timx219_1080p60_cam1    - single imx219 camera on MIPI-CSI2, 1920x1080, 60 fps\n"
+ USAGE+="\tdual_imx219_1080p60    - dual imx219 camera on MIPI-CSI1/2, 1920x1080, 60 fps\n"
+ 
+ # parse command line arguments
+@@ -341,6 +342,15 @@ case "$ISP_CONFIG" in
+                          write_sensor_cfg_file "Sensor0_Entry.cfg" $CAM_NAME $DRV_FILE $MODE_FILE $MODE
+                          write_sensor_cfg_file "Sensor1_Entry.cfg" $CAM_NAME $DRV_FILE $MODE_FILE $MODE
+                          ;;
++		imx219_1080p60_cam1 )
++			 MODULES=("imx219" "${MODULES[@]}")
++                         RUN_OPTION="CAMERA1"
++                         CAM_NAME="imx219"
++                         DRV_FILE="imx219.drv"
++                         MODE_FILE="IMX219_MODES.txt"
++                         MODE="0"
++                         write_sensor_cfg_file "Sensor1_Entry.cfg" $CAM_NAME $DRV_FILE $MODE_FILE $MODE
++                         ;;
+ 		 *)
+ 			echo "ISP configuration \"$ISP_CONFIG\" unsupported."
+ 			echo -e "$USAGE" >&2

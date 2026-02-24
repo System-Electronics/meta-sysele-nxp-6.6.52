@@ -1,12 +1,12 @@
-From 4049d2c6f2c200d7bbe6500099ac272d93b59c62 Mon Sep 17 00:00:00 2001
+From 031655dc3379bfc2b7fd761c5283951f1aa681cd Mon Sep 17 00:00:00 2001
 From: Angelica Denaro <angelica.denaro@kalpa.it>
-Date: Tue, 24 Feb 2026 08:04:25 +0000
+Date: Tue, 24 Feb 2026 14:03:15 +0000
 Subject: [PATCH] dts: add support for onsemi AF0130 camera on i2c6
 
 ---
  .../imx8mp-astrial-af0130.dts                 |   18 +
- .../imx8mp-astrial-base-af0130.dtsi           | 1112 +++++++++++++++++
- 2 files changed, 1130 insertions(+)
+ .../imx8mp-astrial-base-af0130.dtsi           | 1156 +++++++++++++++++
+ 2 files changed, 1174 insertions(+)
  create mode 100644 arch/arm64/boot/dts/system-electronics/imx8mp-astrial-af0130.dts
  create mode 100644 arch/arm64/boot/dts/system-electronics/imx8mp-astrial-base-af0130.dtsi
 
@@ -36,10 +36,10 @@ index 000000000..f626b85af
 +};
 diff --git a/arch/arm64/boot/dts/system-electronics/imx8mp-astrial-base-af0130.dtsi b/arch/arm64/boot/dts/system-electronics/imx8mp-astrial-base-af0130.dtsi
 new file mode 100644
-index 000000000..084337c73
+index 000000000..a7dddf39c
 --- /dev/null
 +++ b/arch/arm64/boot/dts/system-electronics/imx8mp-astrial-base-af0130.dtsi
-@@ -0,0 +1,1112 @@
+@@ -0,0 +1,1156 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright 2019 NXP
@@ -390,6 +390,39 @@ index 000000000..084337c73
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&pinctrl_i2c2>;
 +	status = "okay";
++
++	imx219_1: imx219_mipi@10 {
++		compatible = "sony,imx219";
++		reg = <0x10>;
++		pinctrl-0 = <&pinctrl_csi0_rst>, <&pinctrl_csi_mclk>;
++		clocks = <&clk IMX8MP_CLK_IPP_DO_CLKO2>;
++		clock-names = "xclk";
++		assigned-clocks = <&clk IMX8MP_CLK_IPP_DO_CLKO2>;
++		assigned-clock-parents = <&clk IMX8MP_CLK_24M>;
++		assigned-clock-rates = <24000000>;
++		csi_id = <1>;
++		/* Camera_GPIO points to GPIO1_5... for both cameras? */
++		/* reset-gpios => for standard imx219 driver */
++		/* rst-gpios => for nxp imx219 driver */
++		/* reset-gpios = <&gpio1 5 GPIO_ACTIVE_HIGH>; */
++		/* rst-gpios = <&gpio1 5 GPIO_ACTIVE_HIGH>; */
++		mclk = <24000000>;
++		mclk_source = <0>;
++		mipi_csi;
++
++		status = "okay";
++
++		port {
++			imx219_mipi_1_ep: endpoint {
++				remote-endpoint = <&mipi_csi1_ep>;
++				/* we could do 4 but Raspberry Cam v2 only handles 2 */
++				data-lanes = <1 2>;
++				clock-lanes = <0>;
++				clock-noncontinuous;
++				link-frequencies = /bits/ 64 <456000000>;
++			};
++		};
++	};
 +};
 +
 +&i2c3 {
@@ -1044,7 +1077,18 @@ index 000000000..084337c73
 +&mipi_csi_1 {
 +	#address-cells = <1>;
 +	#size-cells = <0>;
-+	status = "disabled";
++	status = "okay";
++
++	port@1 {
++		reg = <1>;
++		mipi_csi1_ep: endpoint {
++			remote-endpoint = <&imx219_mipi_1_ep>;
++			data-lanes = <2>;
++			csis-hs-settle = <16>;
++			csis-clk-settle = <2>;
++			csis-wclk;
++		};
++	};
 +};
 +
 +&cameradev {
@@ -1080,7 +1124,7 @@ index 000000000..084337c73
 +};
 +
 +&isp_1 {
-+	status = "disabled";
++	status = "okay";
 +};
 +
 +&dewarp {
