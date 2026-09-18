@@ -44,3 +44,9 @@ To send patches, use:
 ```sh
 git send-email --to github@systemelectronics.com <generated-patch>
 ```
+
+# License
+
+All metadata is MIT licensed unless otherwise stated. Source code and
+binaries included in the tree for individual recipes are covered by the
+license stated in each recipe (`.bb` file), unless otherwise stated.
