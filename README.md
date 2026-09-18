@@ -1,42 +1,46 @@
 <p align="center">
-  <img src="https://github.com/System-Electronics/meta-sysele-nxp-6.6.52/blob/main/se_logo.png"/>
+  <img src="se_logo.png"/>
 </p>
 
 ----
 
-Yocto Layer for System Electronics SoM 'Astrial'
-================================================================
+# Yocto Layer for System Electronics SoM 'Astrial'
 
-This Yocto Project / OpenEmbedded layer **meta-sysele-nxp-6.6.52** provides the distro 
-configuration used to build the demo images provided for **System Electronics 'Astrial'** system on module.
+This Yocto Project / OpenEmbedded layer **meta-sysele-nxp-6.6.52** provides
+the configuration and recipes used to build Linux evaluation images for
+the **System Electronics Astrial** system on module.
 
-Dependencies
-============
+This repository targets **Yocto Project 5.0 (Scarthgap)**.
+For an overview of the available Astrial BSP releases, documentation and
+prebuilt image downloads, see the
+[Astrial getting started guide](https://github.com/System-Electronics/astrial-howto).
 
-The setup is strictly alilgned to the version NXP imx-6.6.52-2.2.0
+# Dependencies
 
-Building
-========
+The setup is aligned with **NXP Linux BSP `imx-6.6.52-2.2.0`**.
 
-See the [ASTRIAL-YOCTO-INSTALL.md](https://github.com/System-Electronics/meta-sysele-nxp-6.6.52/blob/main/ASTRIAL-YOCTO-INSTALL.md) in **meta-sysele-nxp-6.6.52** layer.
+Use the manifests and setup instructions provided by this layer to select
+the required repositories and revisions.
 
-Patches
-=======
+# Building
+
+See [ASTRIAL-YOCTO-INSTALL.md](ASTRIAL-YOCTO-INSTALL.md) for environment setup,
+image build instructions and board programming.
+
+The guide covers the Astrial **2 GB, 4 GB and 8 GB RAM** configurations.
+
+# Patches
 
 This layer is maintained by System Electronics.
 
-When creating a patch of the last commit, use
+When creating a patch of the last commit, use:
 
-    git format-patch -s --subject-prefix='meta-sysele][<branch>][PATCH' -1
+```sh
+git format-patch -s --subject-prefix='meta-sysele][<branch>][PATCH' -1
+```
 
-To send patches, use
+To send patches, use:
 
-    git send-email --to github@systemelectronics.com <generated patch>
-
-
-License
-=======
-
-All metadata is MIT licensed unless otherwise stated. Source code and
-binaries included in tree for individual recipes is under the LICENSE
-stated in each recipe (.bb file) unless otherwise stated.
+```sh
+git send-email --to github@systemelectronics.com <generated-patch>
+```
